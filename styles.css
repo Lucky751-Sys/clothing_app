@@ -349,4 +349,3 @@ dialog::backdrop{background: rgba(0,0,0,.55); backdrop-filter: blur(8px)}
   .product__img{min-height:240px;border-top-right-radius: var(--radius);border-bottom-left-radius:0}
   .formGrid{grid-template-columns:1fr}
 }
-

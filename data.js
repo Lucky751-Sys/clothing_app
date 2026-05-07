@@ -18,7 +18,7 @@ export const products = [
     rating: 4.4,
     sizes: ["XS", "S", "M", "L"],
     color: "White",
-    blurb: "Clean fit with rib texture — easy to layer.",
+    blurb: "Clean fit with rib texture - easy to layer.",
     image: "https://source.unsplash.com/600x800/?white,tshirt,women,fashion",
   },
   {
@@ -40,7 +40,7 @@ export const products = [
     rating: 4.5,
     sizes: ["S", "M", "L", "XL"],
     color: "Sand",
-    blurb: "Lightweight linen — made for warm days.",
+    blurb: "Lightweight linen - made for warm days.",
     image: "https://source.unsplash.com/600x800/?linen,shirt,fashion",
   },
   {
@@ -106,7 +106,7 @@ export const products = [
     rating: 4.5,
     sizes: ["S", "M", "L", "XL"],
     color: "Mid Blue",
-    blurb: "Iconic denim layer — works with everything.",
+    blurb: "Iconic denim layer - works with everything.",
     image: "https://source.unsplash.com/600x800/?denim,jacket",
   },
   {
