@@ -1,7 +1,18 @@
-import { products, categories } from "./data.js";
-
 const $ = (sel) => document.querySelector(sel);
 const fmtINR = new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 });
+
+const products = [
+  { id: "tee-black", name: "Oversized Tee", category: "Clothing", price: 899, rating: 4.6, sizes: ["S", "M", "L", "XL"], color: "Black", blurb: "Soft cotton everyday tee.", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&auto=format&fit=crop" },
+  { id: "jeans-indigo", name: "Straight Jeans", category: "Clothing", price: 2199, rating: 4.5, sizes: ["S", "M", "L", "XL"], color: "Indigo", blurb: "Comfort stretch denim fit.", image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=800&auto=format&fit=crop" },
+  { id: "hoodie-gray", name: "Fleece Hoodie", category: "Clothing", price: 1999, rating: 4.7, sizes: ["S", "M", "L", "XL"], color: "Gray", blurb: "Warm fleece with clean style.", image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=800&auto=format&fit=crop" },
+  { id: "rice-5kg", name: "Rice (5kg)", category: "Groceries", price: 599, rating: 4.4, sizes: ["Std"], color: "Pack", blurb: "Premium long grain rice.", image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=800&auto=format&fit=crop" },
+  { id: "oil-5l", name: "Sunflower Oil (5L)", category: "Groceries", price: 899, rating: 4.3, sizes: ["Std"], color: "Bottle", blurb: "Light and healthy oil.", image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=800&auto=format&fit=crop" },
+  { id: "milk-1l", name: "Milk (1L)", category: "Groceries", price: 64, rating: 4.6, sizes: ["Std"], color: "Dairy", blurb: "Fresh daily milk pack.", image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=800&auto=format&fit=crop" },
+  { id: "phone-aura", name: "Aura X Smartphone", category: "Electronics", price: 18999, rating: 4.5, sizes: ["Std"], color: "Midnight", blurb: "Fast phone with dual camera.", image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&auto=format&fit=crop" },
+  { id: "buds-sonic", name: "Wireless Earbuds", category: "Electronics", price: 2499, rating: 4.4, sizes: ["Std"], color: "Black", blurb: "Clear sound, compact case.", image: "https://images.unsplash.com/photo-1606741965326-cb990ae01bb2?w=800&auto=format&fit=crop" },
+  { id: "watch-pulse", name: "Smartwatch", category: "Electronics", price: 3299, rating: 4.2, sizes: ["Std"], color: "Graphite", blurb: "Fitness and notifications.", image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&auto=format&fit=crop" },
+];
+const categories = Array.from(new Set(products.map((p) => p.category))).sort();
 
 const els = {
   year: $("#year"),
@@ -53,7 +64,7 @@ function saveCart(cart) {
   localStorage.setItem(CART_KEY, JSON.stringify(cart));
 }
 
-let cart = loadCart(); // { [productId]: { size: "M", qty: 2 } } - size is last selected
+let cart = loadCart();
 
 function cartCount() {
   return Object.values(cart).reduce((n, it) => n + (it?.qty || 0), 0);
@@ -95,6 +106,47 @@ function escapeHtml(s) {
     .replaceAll("'", "&#039;");
 }
 
+function placeholderImage(label) {
+  const safe = String(label || "Product").slice(0, 28);
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="800" viewBox="0 0 600 800">
+    <defs>
+      <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#7c3aed"/>
+        <stop offset="100%" stop-color="#22c55e"/>
+      </linearGradient>
+    </defs>
+    <rect width="600" height="800" fill="url(#g)"/>
+    <rect x="30" y="30" width="540" height="740" rx="26" fill="rgba(0,0,0,0.25)" stroke="rgba(255,255,255,0.28)"/>
+    <text x="300" y="390" text-anchor="middle" fill="#eef2ff" font-size="44" font-family="Segoe UI, Arial, sans-serif" font-weight="700">${safe}</text>
+    <text x="300" y="450" text-anchor="middle" fill="#dbe3ff" font-size="24" font-family="Segoe UI, Arial, sans-serif">Image Preview</text>
+  </svg>`;
+  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+}
+
+function imageMarkup(url, alt, className) {
+  const fallback = placeholderImage(alt);
+  const remote = url ? ` data-src="${escapeHtml(url)}"` : "";
+  return `<img class="${className} js-upgrade-img" src="${escapeHtml(fallback)}"${remote} alt="${escapeHtml(alt)}" loading="lazy" referrerpolicy="no-referrer" />`;
+}
+
+function upgradeRemoteImages(root = document) {
+  const imgs = root.querySelectorAll("img.js-upgrade-img[data-src]");
+  imgs.forEach((img) => {
+    const remote = img.getAttribute("data-src");
+    if (!remote) return;
+    const probe = new Image();
+    probe.referrerPolicy = "no-referrer";
+    probe.onload = () => {
+      img.src = remote;
+      img.removeAttribute("data-src");
+    };
+    probe.onerror = () => {
+      img.removeAttribute("data-src");
+    };
+    probe.src = remote;
+  });
+}
+
 function initFilters() {
   for (const c of categories) {
     const opt = document.createElement("option");
@@ -133,15 +185,17 @@ function applyFilters(list, f) {
 function renderGrid() {
   const f = currentFilters();
   const list = applyFilters(products, f);
-  els.resultMeta.textContent = `${list.length} product${list.length === 1 ? "" : "s"} · ${cartCount()} item${cartCount() === 1 ? "" : "s"} in cart`;
+  const count = cartCount();
+  els.resultMeta.textContent = `${list.length} product${list.length === 1 ? "" : "s"} · ${count} item${count === 1 ? "" : "s"} in cart`;
   els.grid.setAttribute("aria-busy", "false");
 
   els.grid.innerHTML = list
     .map((p) => {
-      const inCart = cart[p.id]?.qty ? true : false;
+      const inCart = !!cart[p.id]?.qty;
       return `
         <article class="card">
           <div class="card__media" role="img" aria-label="${escapeHtml(p.name)}">
+            ${imageMarkup(p.image, p.name, "card__img")}
             <div class="chip">${escapeHtml(p.category)}</div>
             <div class="rating">★ ${p.rating.toFixed(1)}</div>
           </div>
@@ -167,6 +221,7 @@ function renderGrid() {
       `;
     })
     .join("");
+  upgradeRemoteImages(els.grid);
 }
 
 function openProductDialog(productId) {
@@ -179,7 +234,9 @@ function openProductDialog(productId) {
 
   els.productDialogBody.innerHTML = `
     <div class="product">
-      <div class="product__media" aria-hidden="true"></div>
+      <div class="product__media">
+        ${imageMarkup(p.image, p.name, "product__img")}
+      </div>
       <div class="product__body">
         <h2 style="margin:0">${escapeHtml(p.name)}</h2>
         <div class="product__meta">
@@ -203,7 +260,7 @@ function openProductDialog(productId) {
 
         <div style="display:flex;align-items:flex-end;gap:12px;margin-top:12px;flex-wrap:wrap">
           <div class="qty" aria-label="Quantity">
-            <button class="qty__btn" type="button" data-action="dec">−</button>
+            <button class="qty__btn" type="button" data-action="dec">-</button>
             <div id="dlgQty" class="qty__val" aria-live="polite">${initialQty}</div>
             <button class="qty__btn" type="button" data-action="inc">+</button>
           </div>
@@ -213,6 +270,7 @@ function openProductDialog(productId) {
       </div>
     </div>
   `;
+  upgradeRemoteImages(els.productDialogBody);
 
   const qtyEl = $("#dlgQty");
   const sizeEl = $("#dlgSize");
@@ -327,7 +385,7 @@ function renderCart() {
       .map(({ p, qty, size }) => {
         return `
           <div class="item">
-            <div class="thumb" aria-hidden="true"></div>
+            <div class="thumb">${imageMarkup(p.image, p.name, "thumb__img")}</div>
             <div>
               <div class="item__title">${escapeHtml(p.name)}</div>
               <div class="item__meta">${escapeHtml(p.color)} ·
@@ -337,7 +395,7 @@ function renderCart() {
                 </select>
               </div>
               <div class="item__meta" style="margin-top:8px">
-                <button class="btn btn--ghost" type="button" data-action="dec" data-id="${p.id}">−</button>
+                <button class="btn btn--ghost" type="button" data-action="dec" data-id="${p.id}">-</button>
                 <span style="display:inline-block;min-width:28px;text-align:center;font-weight:900">${qty}</span>
                 <button class="btn btn--ghost" type="button" data-action="inc" data-id="${p.id}">+</button>
                 <button class="btn btn--ghost" type="button" data-action="remove" data-id="${p.id}">Remove</button>
@@ -351,6 +409,7 @@ function renderCart() {
         `;
       })
       .join("");
+    upgradeRemoteImages(els.cartItems);
   }
 
   const subtotal = cartSubtotal();
@@ -455,10 +514,15 @@ function wireEvents() {
 }
 
 function main() {
-  initFilters();
-  wireEvents();
-  renderCart();
-  renderGrid();
+  try {
+    initFilters();
+    wireEvents();
+    renderCart();
+    renderGrid();
+  } catch (err) {
+    console.error(err);
+    if (els.resultMeta) els.resultMeta.textContent = "Failed to load products. Please refresh.";
+  }
 }
 
 main();
