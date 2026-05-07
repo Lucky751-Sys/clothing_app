@@ -8,6 +8,7 @@ export const products = [
     sizes: ["S", "M", "L", "XL"],
     color: "Black",
     blurb: "Soft cotton, relaxed drape, everyday staple.",
+    image: "https://source.unsplash.com/600x800/?black,tshirt,fashion",
   },
   {
     id: "tee-ribbed-white",
@@ -18,6 +19,7 @@ export const products = [
     sizes: ["XS", "S", "M", "L"],
     color: "White",
     blurb: "Clean fit with rib texture — easy to layer.",
+    image: "https://source.unsplash.com/600x800/?white,tshirt,women,fashion",
   },
   {
     id: "shirt-oxford-blue",
@@ -28,6 +30,7 @@ export const products = [
     sizes: ["S", "M", "L", "XL"],
     color: "Blue",
     blurb: "Crisp collar, breathable weave, office-to-weekend.",
+    image: "https://source.unsplash.com/600x800/?oxford,shirt,men",
   },
   {
     id: "shirt-linen-sand",
@@ -38,6 +41,7 @@ export const products = [
     sizes: ["S", "M", "L", "XL"],
     color: "Sand",
     blurb: "Lightweight linen — made for warm days.",
+    image: "https://source.unsplash.com/600x800/?linen,shirt,fashion",
   },
   {
     id: "jeans-straight-indigo",
@@ -48,6 +52,7 @@ export const products = [
     sizes: ["S", "M", "L", "XL"],
     color: "Indigo",
     blurb: "Classic straight leg with premium stretch denim.",
+    image: "https://source.unsplash.com/600x800/?denim,jeans,indigo",
   },
   {
     id: "jeans-relaxed-washed",
@@ -58,6 +63,7 @@ export const products = [
     sizes: ["S", "M", "L", "XL"],
     color: "Washed Blue",
     blurb: "Roomy through the thigh for all-day comfort.",
+    image: "https://source.unsplash.com/600x800/?relaxed,jeans,fashion",
   },
   {
     id: "hoodie-fleece-graphite",
@@ -68,6 +74,7 @@ export const products = [
     sizes: ["S", "M", "L", "XL"],
     color: "Graphite",
     blurb: "Thick fleece, warm hood, minimal branding.",
+    image: "https://source.unsplash.com/600x800/?hoodie,fleece",
   },
   {
     id: "hoodie-zip-olive",
@@ -78,6 +85,7 @@ export const products = [
     sizes: ["XS", "S", "M", "L", "XL"],
     color: "Olive",
     blurb: "Easy zip-up layer with clean seams.",
+    image: "https://source.unsplash.com/600x800/?zip,hoodie,olive",
   },
   {
     id: "jacket-bomber-forest",
@@ -88,6 +96,7 @@ export const products = [
     sizes: ["S", "M", "L", "XL"],
     color: "Forest",
     blurb: "Structured bomber with a smooth matte finish.",
+    image: "https://source.unsplash.com/600x800/?bomber,jacket",
   },
   {
     id: "jacket-denim-mid",
@@ -98,6 +107,7 @@ export const products = [
     sizes: ["S", "M", "L", "XL"],
     color: "Mid Blue",
     blurb: "Iconic denim layer — works with everything.",
+    image: "https://source.unsplash.com/600x800/?denim,jacket",
   },
   {
     id: "dress-midi-berry",
@@ -108,6 +118,7 @@ export const products = [
     sizes: ["XS", "S", "M", "L"],
     color: "Berry",
     blurb: "Flowy silhouette with a flattering waist tie.",
+    image: "https://source.unsplash.com/600x800/?midi,dress,fashion",
   },
   {
     id: "dress-shirt-black",
@@ -118,6 +129,7 @@ export const products = [
     sizes: ["XS", "S", "M", "L", "XL"],
     color: "Black",
     blurb: "Button-down dress with crisp structure.",
+    image: "https://source.unsplash.com/600x800/?shirt,dress,black",
   },
   {
     id: "grocery-rice-5kg",
@@ -128,6 +140,7 @@ export const products = [
     sizes: ["Std"],
     color: "Pack",
     blurb: "Daily-use long grain rice for home cooking.",
+    image: "https://source.unsplash.com/600x800/?rice,groceries",
   },
   {
     id: "grocery-wheat-flour",
@@ -138,6 +151,7 @@ export const products = [
     sizes: ["Std"],
     color: "Pack",
     blurb: "Stone-ground atta for soft rotis and chapatis.",
+    image: "https://source.unsplash.com/600x800/?wheat,flour,grocery",
   },
   {
     id: "grocery-cooking-oil",
@@ -148,6 +162,7 @@ export const products = [
     sizes: ["Std"],
     color: "Bottle",
     blurb: "Refined sunflower oil with light taste.",
+    image: "https://source.unsplash.com/600x800/?sunflower,oil,bottle",
   },
   {
     id: "grocery-milk-pack",
@@ -158,6 +173,7 @@ export const products = [
     sizes: ["Std"],
     color: "Dairy",
     blurb: "Fresh toned milk for daily use.",
+    image: "https://source.unsplash.com/600x800/?milk,packet,dairy",
   },
   {
     id: "elect-phone-aura-x",
@@ -168,6 +184,7 @@ export const products = [
     sizes: ["Std"],
     color: "Midnight",
     blurb: "6.5 inch display, fast charging, dual camera.",
+    image: "https://source.unsplash.com/600x800/?smartphone,mobile",
   },
   {
     id: "elect-buds-sonic",
@@ -178,6 +195,7 @@ export const products = [
     sizes: ["Std"],
     color: "Black",
     blurb: "Low-latency audio with compact charging case.",
+    image: "https://source.unsplash.com/600x800/?wireless,earbuds",
   },
   {
     id: "elect-watch-pulse",
@@ -188,6 +206,7 @@ export const products = [
     sizes: ["Std"],
     color: "Graphite",
     blurb: "Track steps, heart rate, and notifications.",
+    image: "https://source.unsplash.com/600x800/?smartwatch",
   },
   {
     id: "elect-speaker-mini",
@@ -198,6 +217,7 @@ export const products = [
     sizes: ["Std"],
     color: "Blue",
     blurb: "Portable speaker with clear bass and 10h battery.",
+    image: "https://source.unsplash.com/600x800/?bluetooth,speaker",
   },
 ];
 
