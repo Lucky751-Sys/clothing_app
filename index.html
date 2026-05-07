@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Clothify — Shop Clothes</title>
-    <meta name="description" content="A modern clothes shopping demo app (catalog + cart + checkout)." />
+    <title>Clothify — Shop Clothes, Groceries & Electronics</title>
+    <meta name="description" content="A modern multi-category shopping demo app with clothes, groceries, electronics, cart, and checkout." />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -16,14 +16,14 @@
           <span class="brand__mark" aria-hidden="true">C</span>
           <div class="brand__text">
             <div class="brand__name">Clothify</div>
-            <div class="brand__tag">Shop smarter. Dress better.</div>
+            <div class="brand__tag">Shop smarter across every category.</div>
           </div>
         </div>
 
         <div class="header__actions">
           <div class="search" role="search">
             <label class="sr-only" for="q">Search products</label>
-            <input id="q" class="search__input" placeholder="Search shirts, jeans, jackets..." autocomplete="off" />
+            <input id="q" class="search__input" placeholder="Search clothes, groceries, electronics..." autocomplete="off" />
           </div>
           <button id="cartBtn" class="btn btn--primary btn--icon" type="button" aria-haspopup="dialog" aria-controls="cartDrawer">
             <span class="btn__icon" aria-hidden="true">🛒</span>
@@ -37,8 +37,8 @@
     <main id="main" class="container main">
       <section class="hero" aria-label="Promoted products">
         <div class="hero__content">
-          <h1>New season essentials</h1>
-          <p>Clean designs, comfy fits, and a cart that remembers you.</p>
+          <h1>Everything you need in one cart</h1>
+          <p>Discover fashion, daily groceries, and electronics with a fast, simple checkout.</p>
           <div class="hero__cta">
             <button id="shopNowBtn" class="btn btn--primary" type="button">Shop now</button>
             <a class="btn btn--ghost" href="#catalog">Browse catalog</a>
@@ -78,6 +78,7 @@
                 <option value="M">M</option>
                 <option value="L">L</option>
                 <option value="XL">XL</option>
+                <option value="Std">Std</option>
               </select>
             </div>
             <div class="field">
