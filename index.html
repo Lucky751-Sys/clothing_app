@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clothify — Shop Clothes</title>
+    <meta name="description" content="A modern clothes shopping demo app (catalog + cart + checkout)." />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="header">
+      <div class="container header__inner">
+        <div class="brand" aria-label="Clothify home">
+          <span class="brand__mark" aria-hidden="true">C</span>
+          <div class="brand__text">
+            <div class="brand__name">Clothify</div>
+            <div class="brand__tag">Shop smarter. Dress better.</div>
+          </div>
+        </div>
+
+        <div class="header__actions">
+          <div class="search" role="search">
+            <label class="sr-only" for="q">Search products</label>
+            <input id="q" class="search__input" placeholder="Search shirts, jeans, jackets..." autocomplete="off" />
+          </div>
+          <button id="cartBtn" class="btn btn--primary btn--icon" type="button" aria-haspopup="dialog" aria-controls="cartDrawer">
+            <span class="btn__icon" aria-hidden="true">🛒</span>
+            <span>Cart</span>
+            <span id="cartCount" class="pill" aria-label="Items in cart">0</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" class="container main">
+      <section class="hero" aria-label="Promoted products">
+        <div class="hero__content">
+          <h1>New season essentials</h1>
+          <p>Clean designs, comfy fits, and a cart that remembers you.</p>
+          <div class="hero__cta">
+            <button id="shopNowBtn" class="btn btn--primary" type="button">Shop now</button>
+            <a class="btn btn--ghost" href="#catalog">Browse catalog</a>
+          </div>
+          <div class="hero__badges" aria-label="Store highlights">
+            <div class="badge">Free returns</div>
+            <div class="badge">Secure checkout</div>
+            <div class="badge">Fast delivery</div>
+          </div>
+        </div>
+        <div class="hero__card" aria-hidden="true">
+          <div class="hero__cardTop"></div>
+          <div class="hero__cardBody">
+            <div class="skeleton skeleton--title"></div>
+            <div class="skeleton skeleton--line"></div>
+            <div class="skeleton skeleton--line"></div>
+            <div class="skeleton skeleton--btn"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="catalog" class="catalog" aria-label="Product catalog">
+        <div class="catalog__bar">
+          <div class="filters">
+            <div class="field">
+              <label for="category">Category</label>
+              <select id="category">
+                <option value="all">All</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="size">Size</label>
+              <select id="size">
+                <option value="all">All</option>
+                <option value="XS">XS</option>
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="sort">Sort</label>
+              <select id="sort">
+                <option value="featured">Featured</option>
+                <option value="priceAsc">Price: Low to High</option>
+                <option value="priceDesc">Price: High to Low</option>
+                <option value="ratingDesc">Rating</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="catalog__meta">
+            <div id="resultMeta" class="muted" aria-live="polite">Loading…</div>
+            <button id="clearFiltersBtn" class="btn btn--ghost" type="button">Clear</button>
+          </div>
+        </div>
+
+        <div id="grid" class="grid" aria-live="polite" aria-busy="true"></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__inner">
+        <div class="muted">© <span id="year"></span> Clothify. Demo store.</div>
+        <div class="muted">Built with HTML/CSS/JS · Deploy on GitHub Pages</div>
+      </div>
+    </footer>
+
+    <!-- Product dialog -->
+    <dialog id="productDialog" class="dialog" aria-label="Product details">
+      <form method="dialog" class="dialog__frame">
+        <button class="iconBtn dialog__close" value="close" aria-label="Close">✕</button>
+        <div id="productDialogBody"></div>
+      </form>
+    </dialog>
+
+    <!-- Cart drawer -->
+    <div id="drawerOverlay" class="overlay" hidden></div>
+    <aside id="cartDrawer" class="drawer" aria-label="Cart" aria-hidden="true">
+      <div class="drawer__header">
+        <div>
+          <div class="drawer__title">Your cart</div>
+          <div id="cartSub" class="muted">0 items</div>
+        </div>
+        <button id="closeCartBtn" class="iconBtn" type="button" aria-label="Close cart">✕</button>
+      </div>
+      <div id="cartItems" class="drawer__body" aria-live="polite"></div>
+      <div class="drawer__footer">
+        <div class="totals">
+          <div class="totals__row">
+            <span class="muted">Subtotal</span>
+            <span id="subtotal">$0.00</span>
+          </div>
+          <div class="totals__row">
+            <span class="muted">Delivery</span>
+            <span id="shipping">$0.00</span>
+          </div>
+          <div class="totals__row totals__row--big">
+            <span>Total</span>
+            <span id="total">$0.00</span>
+          </div>
+        </div>
+        <button id="checkoutBtn" class="btn btn--primary btn--full" type="button">Checkout</button>
+        <button id="clearCartBtn" class="btn btn--ghost btn--full" type="button">Clear cart</button>
+      </div>
+    </aside>
+
+    <!-- Checkout dialog -->
+    <dialog id="checkoutDialog" class="dialog" aria-label="Checkout">
+      <form id="checkoutForm" method="dialog" class="dialog__frame">
+        <button class="iconBtn dialog__close" value="close" aria-label="Close">✕</button>
+        <div class="dialog__body">
+          <h2>Checkout</h2>
+          <p class="muted">Demo checkout — no real payments are taken.</p>
+
+          <div class="formGrid">
+            <div class="field">
+              <label for="name">Full name</label>
+              <input id="name" required placeholder="Your name" />
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" type="email" required placeholder="you@example.com" />
+            </div>
+            <div class="field formGrid__full">
+              <label for="address">Address</label>
+              <input id="address" required placeholder="Street, City, ZIP" />
+            </div>
+            <div class="field">
+              <label for="payment">Payment</label>
+              <select id="payment" required>
+                <option value="card">Card</option>
+                <option value="upi">UPI</option>
+                <option value="cod">Cash on Delivery</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="promo">Promo code</label>
+              <input id="promo" placeholder="Optional" />
+            </div>
+          </div>
+
+          <div class="checkoutSummary">
+            <div class="muted">Paying</div>
+            <div id="checkoutTotal" class="checkoutSummary__total">$0.00</div>
+          </div>
+
+          <menu class="dialog__actions">
+            <button class="btn btn--ghost" value="cancel" type="button" id="cancelCheckoutBtn">Cancel</button>
+            <button class="btn btn--primary" value="confirm" type="submit">Place order</button>
+          </menu>
+        </div>
+      </form>
+    </dialog>
+
+    <script type="module" src="./src/app.js"></script>
+  </body>
+</html>
