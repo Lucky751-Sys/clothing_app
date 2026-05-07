@@ -1,6 +1,6 @@
 # Clothify (Clothes Shopping Web App)
 
-A modern **static** shopping clothes web app (catalog + cart + checkout demo) built with **HTML/CSS/JavaScript** — no Node/npm required.
+A modern **static** multi-category shopping web app (clothes + groceries + electronics, with cart + checkout demo) built with **HTML/CSS/JavaScript** — no Node/npm required.
 
 ## Run locally
 
